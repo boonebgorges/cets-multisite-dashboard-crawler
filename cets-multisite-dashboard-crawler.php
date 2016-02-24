@@ -55,7 +55,15 @@ function multisite_dashboard_crawler_single_admin_footer() {
 		} else {
 			$next_url = network_admin_url("/settings.php?page=multisite_dashboard_crawler&multisite_dashboard_crawler_done=1");
 		}
-		echo "<script>window.location='{$next_url}'</script>";
+
+		/**
+		 * Set a delay before running the next site's upgrade.
+		 *
+		 * @param int $delay Delay in milliseconds.
+		 */
+		$delay = apply_filters( 'cets_mds_delay', 0 );
+
+		echo "<script>setTimeout( function() { window.location='{$next_url}'; }, " . intval( $delay ) . ");</script>";
 	}
 }
 
